@@ -1,4 +1,4 @@
-=<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -43,16 +43,7 @@
 
     <script>
         // Initialize the map
-        var map = L.map('map', {
-            center: [36.2048, 138.2529],
-            zoom: 5,
-            minZoom: 5,
-            maxZoom: 12,
-            maxBounds: [
-                [20, 122], // Southwest coordinates
-                [46, 154]  // Northeast coordinates
-            ]
-        });
+        var map = L.map('map').setView([36.2048, 138.2529], 5);
 
         // Add the Carto Voyager tile layer with English labels
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -61,75 +52,25 @@
             maxZoom: 20
         }).addTo(map);
 
-        // Japanese prefectures data
-        var prefectures = [
-            {name: "Hokkaido", lat: 43.2203, lon: 142.8635},
-            {name: "Aomori", lat: 40.8244, lon: 140.7400},
-            {name: "Iwate", lat: 39.7036, lon: 141.1527},
-            {name: "Miyagi", lat: 38.2688, lon: 140.8721},
-            {name: "Akita", lat: 39.7186, lon: 140.1024},
-            {name: "Yamagata", lat: 38.2404, lon: 140.3633},
-            {name: "Fukushima", lat: 37.7500, lon: 140.4678},
-            {name: "Ibaraki", lat: 36.3418, lon: 140.4467},
-            {name: "Tochigi", lat: 36.5657, lon: 139.8836},
-            {name: "Gunma", lat: 36.3911, lon: 139.0608},
-            {name: "Saitama", lat: 35.8616, lon: 139.6455},
-            {name: "Chiba", lat: 35.6073, lon: 140.1063},
+        // Add markers for major cities
+        var cities = [
             {name: "Tokyo", lat: 35.6762, lon: 139.6503},
-            {name: "Kanagawa", lat: 35.4475, lon: 139.6424},
-            {name: "Niigata", lat: 37.9026, lon: 139.0236},
-            {name: "Toyama", lat: 36.6953, lon: 137.2113},
-            {name: "Ishikawa", lat: 36.5946, lon: 136.6255},
-            {name: "Fukui", lat: 36.0641, lon: 136.2196},
-            {name: "Yamanashi", lat: 35.6641, lon: 138.5684},
-            {name: "Nagano", lat: 36.6513, lon: 138.1811},
-            {name: "Gifu", lat: 35.3911, lon: 136.7220},
-            {name: "Shizuoka", lat: 34.9756, lon: 138.3826},
-            {name: "Aichi", lat: 35.1802, lon: 136.9066},
-            {name: "Mie", lat: 34.7303, lon: 136.5086},
-            {name: "Shiga", lat: 35.0045, lon: 135.8686},
-            {name: "Kyoto", lat: 35.0116, lon: 135.7681},
             {name: "Osaka", lat: 34.6937, lon: 135.5023},
-            {name: "Hyogo", lat: 34.6913, lon: 135.1830},
-            {name: "Nara", lat: 34.6851, lon: 135.8048},
-            {name: "Wakayama", lat: 34.2261, lon: 135.1675},
-            {name: "Tottori", lat: 35.5036, lon: 134.2383},
-            {name: "Shimane", lat: 35.4723, lon: 133.0505},
-            {name: "Okayama", lat: 34.6618, lon: 133.9344},
-            {name: "Hiroshima", lat: 34.3966, lon: 132.4596},
-            {name: "Yamaguchi", lat: 34.1861, lon: 131.4705},
-            {name: "Tokushima", lat: 34.0658, lon: 134.5593},
-            {name: "Kagawa", lat: 34.3401, lon: 134.0434},
-            {name: "Ehime", lat: 33.8416, lon: 132.7661},
-            {name: "Kochi", lat: 33.5597, lon: 133.5311},
-            {name: "Fukuoka", lat: 33.5904, lon: 130.4017},
-            {name: "Saga", lat: 33.2494, lon: 130.2988},
-            {name: "Nagasaki", lat: 32.7503, lon: 129.8777},
-            {name: "Kumamoto", lat: 32.7898, lon: 130.7417},
-            {name: "Oita", lat: 33.2396, lon: 131.6095},
-            {name: "Miyazaki", lat: 31.9077, lon: 131.4202},
-            {name: "Kagoshima", lat: 31.5602, lon: 130.5581},
-            {name: "Okinawa", lat: 26.2124, lon: 127.6809}
+            {name: "Nagoya", lat: 35.1815, lon: 136.9066},
+            {name: "Sapporo", lat: 43.0618, lon: 141.3545},
+            {name: "Fukuoka", lat: 33.5904, lon: 130.4017}
         ];
 
-        // Add markers for prefectures
-        prefectures.forEach(function(prefecture) {
-            L.circleMarker([prefecture.lat, prefecture.lon], {
-                radius: 5,
-                fillColor: "#ff7800",
-                color: "#000",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.8
-            })
-            .addTo(map)
-            .bindPopup(prefecture.name);
+        cities.forEach(function(city) {
+            L.marker([city.lat, city.lon])
+             .addTo(map)
+             .bindPopup(city.name);
         });
 
         // Function to update the navbar data (placeholder)
         function updateNavbarData() {
             document.getElementById('expected-earthquake').textContent = 'In ' + Math.floor(Math.random() * 7 + 1) + ' days';
-            document.getElementById('next-hit').textContent = prefectures[Math.floor(Math.random() * prefectures.length)].name;
+            document.getElementById('next-hit').textContent = cities[Math.floor(Math.random() * cities.length)].name;
             document.getElementById('magnitude').textContent = (Math.random() * 3 + 5).toFixed(1);
             document.getElementById('death-rate').textContent = (Math.random() * 0.1).toFixed(2) + '%';
             document.getElementById('economic-impact').textContent = '$' + (Math.random() * 10 + 1).toFixed(1) + 'B';
