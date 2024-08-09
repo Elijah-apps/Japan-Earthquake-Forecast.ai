@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japan Earthquake Map</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        #map {
+            height: calc(100vh - 4rem);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div id="map" class="w-full"></div>
+    
+    <nav class="fixed bottom-0 left-0 right-0 bg-white shadow-lg">
+        <div class="flex justify-around items-center h-16 px-4">
+            <div class="text-center">
+                <p class="text-xs font-semibold text-gray-600">Expected Earthquake</p>
+                <p class="text-sm font-bold text-red-600" id="expected-earthquake">In 3 days</p>
+            </div>
+            <div class="text-center">
+                <p class="text-xs font-semibold text-gray-600">Next Hit</p>
+                <p class="text-sm font-bold text-orange-600" id="next-hit">Tokyo</p>
+            </div>
+            <div class="text-center">
+                <p class="text-xs font-semibold text-gray-600">Magnitude</p>
+                <p class="text-sm font-bold text-yellow-600" id="magnitude">6.5</p>
+            </div>
+            <div class="text-center">
+                <p class="text-xs font-semibold text-gray-600">Death Rate</p>
+                <p class="text-sm font-bold text-blue-600" id="death-rate">0.01%</p>
+            </div>
+            <div class="text-center">
+                <p class="text-xs font-semibold text-gray-600">Economic Impact</p>
+                <p class="text-sm font-bold text-green-600" id="economic-impact">$2B</p>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([36.2048, 138.2529], 5);
+
+        // Add the OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Function to update the navbar data (placeholder)
+        function updateNavbarData() {
+            document.getElementById('expected-earthquake').textContent = 'In ' + Math.floor(Math.random() * 7 + 1) + ' days';
+            document.getElementById('next-hit').textContent = ['Tokyo', 'Osaka', 'Kyoto', 'Nagoya', 'Sapporo'][Math.floor(Math.random() * 5)];
+            document.getElementById('magnitude').textContent = (Math.random() * 3 + 5).toFixed(1);
+            document.getElementById('death-rate').textContent = (Math.random() * 0.1).toFixed(2) + '%';
+            document.getElementById('economic-impact').textContent = '$' + (Math.random() * 10 + 1).toFixed(1) + 'B';
+        }
+
+        // Update navbar data every 10 seconds (for demonstration purposes)
+        setInterval(updateNavbarData, 10000);
+        updateNavbarData(); // Initial update
+    </script>
+</body>
+</html>
